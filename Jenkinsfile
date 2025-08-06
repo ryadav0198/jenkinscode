@@ -23,8 +23,8 @@ pipeline {
             steps {
                 sshagent (credentials: ["${SSH_KEY_ID}"]) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_IP} 'mkdir -p ~/python-app/app'
-                    scp -o StrictHostKeyChecking=no -r * ${EC2_USER}@${EC2_IP}:~/python-app/app/
+                    ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_IP} 'mkdir -p ~/python-app/'
+                    scp -o StrictHostKeyChecking=no -r * ${EC2_USER}@${EC2_IP}:~/python-app/
                     """
                 }
             }
