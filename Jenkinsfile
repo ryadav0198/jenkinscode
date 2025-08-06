@@ -3,8 +3,10 @@ pipeline {
 
     environment {
         EC2_USER = 'ec2-user'
-        EC2_IP = '44.201.168.167'
-        SSH_KEY_ID = '76500835-54f1-424d-b6aa-78ecb2bbf8fe' // ID of the SSH key added in Jenkins credentials
+        //EC2_IP = '44.201.168.167'
+        EC2_IP = '3.93.20.227'
+        //#SSH_KEY_ID = '76500835-54f1-424d-b6aa-78ecb2bbf8fe' // ID of the SSH key added in Jenkins credentials
+        SSH_KEY_ID = '3094bad0-b614-4dfc-aaa8-932a174dc41c'
     }
     triggers {
         githubPush()
