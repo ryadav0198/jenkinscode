@@ -6,6 +6,9 @@ pipeline {
         EC2_IP = '44.201.168.167'
         SSH_KEY_ID = '76500835-54f1-424d-b6aa-78ecb2bbf8fe' // ID of the SSH key added in Jenkins credentials
     }
+    triggers {
+        githubPush()
+    }
 
     stages {
         stage('Checkout Code') {
