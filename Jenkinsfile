@@ -13,23 +13,30 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/ryadav0198/jenkinscode.git'
             }
         }
+        stage('Build Docker Image'){
+            steps {
+                sh 'docker build -t python-app .'
+            }
+        }
 
-        stage('Deploy to EC2') {
+        stage('Deploy and copy to EC2') {
             steps {
                 sshagent (credentials: ["${SSH_KEY_ID}"]) {
                     sh """
                     ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_IP} 'mkdir -p ~/python-app/app'
-                    scp -o StrictHostKeyChecking=no app/main.py ${EC2_USER}@${EC2_IP}:~/python-app/app/
+                    scp -o StrictHostKeyChecking=no * ${EC2_USER}@${EC2_IP}:~/python-app/app/
                     """
                 }
             }
         }
 
-        stage('Run Python Script') {
+        stage('Run Docker and Python Script') {
             steps {
                 sshagent (credentials: ["${SSH_KEY_ID}"]) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_IP} 'python3 ~/python-app/app/main.py'
+                    ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_IP} 'cd /home/ec2-user/python-app &&
+                        docker build -t python-app . &&
+                        docker run -d --name python-app python-app'
                     """
                 }
             }
