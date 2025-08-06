@@ -19,7 +19,7 @@ pipeline {
                 sshagent (credentials: ["${SSH_KEY_ID}"]) {
                     sh """
                     ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_IP} 'mkdir -p ~/python-app/app'
-                    scp -o StrictHostKeyChecking=no app/python.py ${EC2_USER}@${EC2_IP}:~/python-app/app/
+                    scp -o StrictHostKeyChecking=no app/main.py ${EC2_USER}@${EC2_IP}:~/python-app/app/
                     """
                 }
             }
@@ -29,7 +29,7 @@ pipeline {
             steps {
                 sshagent (credentials: ["${SSH_KEY_ID}"]) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_IP} 'python3 ~/python-app/app/python.py'
+                    ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_IP} 'python3 ~/python-app/app/main.py'
                     """
                 }
             }
