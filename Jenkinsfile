@@ -35,8 +35,8 @@ pipeline {
                 sshagent (credentials: ["${SSH_KEY_ID}"]) {
                     sh """
                     ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_IP} 'cd /home/ec2-user/python-app &&
-                        docker build -t python-app . &&
-                        docker run -d --name python-app python-app'
+                        sudo docker build -t python-app . &&
+                        sudo docker run -d --name python-app python-app'
                     """
                 }
             }
